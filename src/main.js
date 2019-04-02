@@ -1,0 +1,26 @@
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
+import fastclick from "fastclick";
+
+
+import "@/common/stylus/index.styl";
+
+Vue.config.productionTip = false;
+
+fastclick.attach(document.body);
+
+router.beforeEach((to, from, next) => {
+  /* 路由發生變化修改頁面title */
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
+  next();
+});
+
+new Vue({
+  router,
+  store,
+  render: h => h(App)
+}).$mount("#app");
