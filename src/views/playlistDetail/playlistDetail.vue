@@ -1,7 +1,7 @@
 <template>
     <div class="list-container">
         <header>
-            <img width="200" height="200" :src="playlist.coverImgUrl" alt="">
+            <img width="200" height="200" v-lazy="playlist.coverImgUrl" alt="">
         </header>
         <ol>
             <li :key="index" v-for="(song, index) in playlist.tracks" @click="goPlay(song.id)">
@@ -11,7 +11,8 @@
     </div>
 </template>
 <script>
-import { requestPlaylistDetail } from '@/api/api.js';
+import { requestPlaylistDetail, requestSongUrl } from '@/api/api.js';
+import {mapMutations} from 'vuex';
 // import * as util from '../javascript/util';
 
 export default {
@@ -30,14 +31,19 @@ export default {
         },
         getPlaylistDetail() {
             requestPlaylistDetail(this.playlistId).then((res) => {
-                console.log(res);
                 if (res && +res.code === 200) {
                     this.playlist = res.playlist;
                 }
+            }).then(() => {
+                console.log(this.playlist);
             })
         },
         goPlay(id) {
-            console.log(id);
+            requestSongUrl(id).then((res) => {
+                console.log(res);
+                let songUrl = res.data[0].url;
+                this.$store.commit('updateCurrentSongUrl', songUrl);
+            })
         }
     },
     created() {
@@ -45,7 +51,7 @@ export default {
             this.goBack();
         }
         // this.playlistId = this.$route.params.id;
-        this.playlistId = 120001;
+        this.playlistId = 19723756;
         console.log(this.playlistId);
         this.getPlaylistDetail();
     },

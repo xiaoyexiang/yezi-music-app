@@ -1,6 +1,6 @@
 <template>
     <transition>
-        <div class="player-container" v-show="showPlayer" v-cloak>
+        <div class="player-container" v-show="showPlayer && currentSongUrl" v-cloak>
             <template v-if="currentSongUrl">
                 <audio :src="currentSongUrl" controls preload="metadata"></audio>
             </template>
@@ -9,19 +9,21 @@
 </template>
 <script>
 import { requestSongUrl } from '@/api/api.js';
+import {mapState} from 'vuex';
 // import * as util from '../javascript/util';
 
 export default {
+    computed: {
+        currentSongUrl() {
+            return this.$store.state.currentSongUrl
+        }
+    },
     data() {
         return {
-          currentSongUrl: '',
           showPlayer: true,
         }
     },
     methods: {
-      setCurrentSongUrl(url) {
-        this.currentSongUrl = url
-      }
     },
     created() {
     },

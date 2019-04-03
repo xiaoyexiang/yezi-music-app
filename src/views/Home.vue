@@ -5,7 +5,7 @@
     </template>
     <ul>
         <li :key="index" v-for="(item, index) in songMenuTopList" @click.prevent.stop="jump('playlistDetail', item)">
-            <img width="100" height="100" :src="item.coverImgUrl" alt="">
+            <img width="100" height="100" v-lazy="item.coverImgUrl" alt="">
             <h3 v-text="item.name"></h3>
         </li>
     </ul>
