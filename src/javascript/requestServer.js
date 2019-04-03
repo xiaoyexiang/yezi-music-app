@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let baseURL = process.env.NODE_ENV === 'production' ? 'http://www.xiaoyxxiang.com' : 'http://localhost:4000';
+let baseURL = process.env.NODE_ENV === 'production' ? 'http://www.xiaoyxxiang.com:3000' : 'http://localhost:4000';
 console.log('baseURL: ', baseURL);
 
 const requestServer = axios.create({
