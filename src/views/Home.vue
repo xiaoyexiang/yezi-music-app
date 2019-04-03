@@ -4,7 +4,7 @@
         <audio :src="currentSongUrl" controls preload="auto"></audio>
     </template>
     <ul>
-        <li v-for="item in songMenuTopList">
+        <li :key="index" v-for="(item, index) in songMenuTopList" @click.prevent.stop="jump('playlistDetail', item)">
             <img width="100" height="100" :src="item.coverImgUrl" alt="">
             <h3 v-text="item.name"></h3>
         </li>
@@ -15,7 +15,7 @@
 <script>
 // @ is an alias to /src
 import requestServer from "@/javascript/requestServer.js";
-import {requestToplist, requestPlaylistDetail} from "@/api/api.js";
+import {requestToplist} from "@/api/api.js";
 
 export default {
   name: "home",
@@ -54,6 +54,17 @@ export default {
                 this.currentSongUrl = res.data[0].url;
             }
         })
+    },
+    jump(router, item) {
+        if(router) {
+            let params = {
+                id: item.id
+            }
+            this.$router.push({
+                name: router,
+                params
+            });
+        }
     }
   },
   created() {

@@ -37,3 +37,6 @@ export const requestToplist = promiseCache(() => requestServer.get('/toplist'), 
 
 // 获取歌单详情
 export const requestPlaylistDetail = promiseCache((id) => requestServer.get(`/playlist/detail?id=${id}`), id => `PlaylistDetail-${id}`)
+
+// 获取歌单播放url
+export const requestSongUrl = promiseCache(id => requestServer.get(`/song/url?id=${id}`), id => `songUrl-${id}`);
