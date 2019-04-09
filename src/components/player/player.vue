@@ -31,16 +31,15 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
-    // .player-container {
-    //     position fixed
-    //     top: 0
-    //     right: 0
-    //     bottom: 0
-    //     left: 0
-    //     z-index: 100
-    //     margin: auto
-    //     display: block
-    //     overflow: hidden
-    //     background-color: #fff
-    // }
+     .player-container {
+         position fixed
+         right: 0
+         bottom: 0
+         left: 0
+         z-index: 100
+         margin: auto
+         display: block
+         overflow: hidden
+         background-color: #fff
+     }
 </style>
