@@ -7,6 +7,8 @@ import VueLazyload from "vue-lazyload";
 
 import "@/common/stylus/index.styl";
 
+import "./cube-ui.js";
+
 Vue.config.productionTip = false;
 
 Vue.use(VueLazyload, {

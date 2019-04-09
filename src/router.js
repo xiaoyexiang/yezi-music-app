@@ -1,7 +1,5 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./views/Home.vue";
-import pl from "./views/Home.vue";
 
 Vue.use(Router);
 
@@ -9,9 +7,32 @@ export default new Router({
   // mode: "history",
   base: process.env.BASE_URL,
   routes: [{
-    path: "/",
-    name: "home",
-    component: Home
+    path: '/',
+    redirect: '/recommend'
+  }, {
+    path: "/recommend",
+    name: "recommend",
+    meta: {
+      title: '推荐'
+    },
+    component: () =>
+      import ("./views/recommend/recommend.vue")
+  }, {
+    path: "/singer",
+    name: "singer",
+    meta: {
+      title: '歌手'
+    },
+    component: () =>
+      import ("./views/singer/singer.vue")
+  }, {
+    path: "/mine",
+    name: "mine",
+    meta: {
+      title: '我的'
+    },
+    component: () =>
+      import ("./views/mine/mine.vue")
   }, {
     path: "/about",
     name: "about",
