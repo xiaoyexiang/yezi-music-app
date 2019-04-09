@@ -1,18 +1,21 @@
 <template>
     <div id="app">
-        <player></player>
-        <tabNav></tabNav>
+        <y-header></y-header>
+        <tab-nav></tab-nav>
         <router-view></router-view>
+        <player></player>
     </div>
 </template>
 <script>
   import Player from '@/components/player/player.vue';
   import TabNav from '@/components/tabNav/tabNav.vue';
+  import YHeader from '@/components/yHeader/yHeader.vue';
 
   export default {
     components: {
       Player,
-      TabNav
+      TabNav,
+      YHeader
     }
   }
 </script>
