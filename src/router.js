@@ -16,7 +16,14 @@ export default new Router({
       title: '推荐'
     },
     component: () =>
-      import ("./views/recommend/recommend.vue")
+      import ("./views/recommend/recommend.vue"),
+    children: [
+      {
+        path: ':id',
+        component: () =>
+          import ("./views/playlistDetail/playlistDetail.vue")
+      }
+    ]
   }, {
     path: "/singer",
     name: "singer",
@@ -24,7 +31,14 @@ export default new Router({
       title: '歌手'
     },
     component: () =>
-      import ("./views/singer/singer.vue")
+      import ("./views/singer/singer.vue"),
+    children: [
+      {
+        path: ':id',
+        component: () =>
+          import ("./views/playlistDetail/playlistDetail.vue")
+      }
+    ]
   }, {
     path: "/mine",
     name: "mine",

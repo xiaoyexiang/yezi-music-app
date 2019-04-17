@@ -25,3 +25,19 @@ export function debounce(func, delay) {
     }, delay)
   }
 }
+
+/**
+ * 字符串后四位转化为万
+ * @param {String} num
+ * @return {String}
+ */
+export const handleCount = (num) => {
+  if (num) {
+    const str = String(num);
+    if (str.length > 5) {
+      return str.replace(/\d{4}$/, '万');
+    }
+    return str;
+  }
+  return '';
+};

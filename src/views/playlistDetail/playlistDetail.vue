@@ -2,21 +2,26 @@
     <div class="list-container">
         <cube-scroll
                 ref="scroll"
-                :data="playlist">
+                :data="playlist.tracks">
             <section class="pylist-header">
                 <div class="bg-image" :style="bgStyle"></div>
                 <div class="plhead_wrap">
                     <div class="plhead_fl">
                         <img class="u-img" v-lazy="bgImageUrl">
                         <span class="lsthd_icon">歌单</span>
-                        <i class="u-earp lsthd_num">272.6万</i>
+                        <span class="lsthd_num">
+                            <i class="icon iconfont icon-erjieps"></i> {{handleCount(playlist && playlist.playCount)}}
+                        </span>
                     </div>
-                    <div class="plhead_fr"><h2 class="f-thide2 f-brk lsthd_title">你是踩碎星光落入我梦境的一袋幻想</h2>
-                        <div class="lsthd_auth f-thide"><a class="lsthd_link" href="/m/user?id=402524626">
-                            <div class="u-avatar lsthd_ava"><img class="u-img"
-                                                                 src="http://p1.music.126.net/Zit8wCBkBQMDnADGQzMCJA==/109951163672539121.webp?imageView&amp;thumbnail=90x0&amp;quality=75&amp;tostatic=0&amp;type=webp"><span
-                                    class="ava-icon ava-icon-daren"></span></div>
-                            可能是条淡水鱼</a></div>
+                    <div class="plhead_fr">
+                        <h2 class="lsthd_title">{{playlist.name}}</h2>
+                        <div class="lsthd_auth">
+                            <div class="u-avatar lsthd_ava">
+                                <img class="u-img" :src="playlist && playlist.creator.avatarUrl">
+                            </div>
+                            <span class="nickname">{{playlist && playlist.creator.nickname}}</span>
+
+                        </div>
                     </div>
                 </div>
             </section>
@@ -34,7 +39,7 @@
 <script>
   import {requestPlaylistDetail, requestSongUrl} from '@/api/api.js';
   import {mapMutations} from 'vuex';
-  // import * as util from '../javascript/util';
+  import * as util from '@/common/js/util';
 
   export default {
     computed: {
@@ -72,7 +77,10 @@
           let songUrl = res.data[0].url;
           this.$store.commit('updateCurrentSongUrl', songUrl);
         })
-      }
+      },
+      handleCount(num) {
+        return util.handleCount(num);
+      },
     },
     created() {
       if (!this.playlistId) {
@@ -128,24 +136,97 @@
                 background-color: rgba(0, 0, 0, .25)
             }
         }
-    }
-
-    .cover-zone {
-        position: relative;
-        display: block;
-        width: 200px;
-        height: 200px;
-        margin: 20px auto;
-        .play-detail-cover {
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0
-            bottom: 0
-            margin: auto
+        .plhead_wrap {
+            display: flex
+            position: relative
+            z-index: 2
+            .plhead_fl {
+                position: relative
+                width: 114px
+                height: 114px
+                background-color: #e2e2e3
+                &::after {
+                    content: " ";
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 18px;
+                    z-index: 2;
+                    background-image: linear-gradient(90deg, transparent, rgba(0, 0, 0, .2));
+                }
+                .lsthd_icon {
+                    position: absolute;
+                    z-index: 3;
+                    top: 10px;
+                    left: 0;
+                    padding: 0 8px;
+                    height: 17px;
+                    color: #fff;
+                    font-size: 9px;
+                    text-align: center;
+                    line-height: 17px;
+                    background-color: rgba(217, 48, 48, .8);
+                    border-top-right-radius: 17px;
+                    border-bottom-right-radius: 17px;
+                }
+                .u-img {
+                    display: block
+                    width: 100%
+                }
+                .lsthd_num {
+                    position: absolute;
+                    right: 2px;
+                    top: 0;
+                    z-index: 3;
+                    color: #fff;
+                    font-size: 12px;
+                    text-shadow: 1px 0 0 rgba(0, 0, 0, .15);
+                }
+            }
+            .plhead_fr {
+                margin-left: 15px
+                flex: 1 1 auto
+                overflow: hidden
+                width: 1%
+                .u-avatar {
+                    display: inline-block;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    vertical-align: middle;
+                    margin-right: 5px;
+                    .u-img {
+                        width: 100%
+                        border-radius: 50%;
+                    }
+                }
+                .nickname {
+                    color: hsla(0,0%,100%,.7);
+                }
+            }
+        }
+        .lsthd_title {
+            padding-top: 1px;
+            font-size: 17px;
+            line-height: 1.3;
+            color: #fefefe;
+            height: 44px;
+            display: -webkit-box;
+            -webkit-box-pack: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .lsthd_auth {
             display: block;
-            width: 200px;
-            height: 200px;
+            position: relative;
+            margin-top: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            word-break: normal;
         }
     }
 
