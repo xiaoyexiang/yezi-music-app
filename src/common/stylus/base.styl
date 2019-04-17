@@ -7,9 +7,33 @@ body, html
   -webkit-tap-highlight-color: transparent
   background: #fff
   color: $color-text
-  
+
 *, *::before, *::after {
   box-sizing border-box
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 1.5) {
+  .border-1px:after {
+    width: 150%;
+    height: 150%;
+    transform: scale(.666666);
+  }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+  .border-1px:after {
+    width: 200%;
+    height: 200%;
+    transform: scale(.5);
+  }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 3) {
+  .border-1px:after {
+    width: 300%;
+    height: 300%;
+    transform: scale(.333333);
+  }
 }
 
 .dialog {

@@ -3,6 +3,12 @@ import Router from "vue-router";
 
 Vue.use(Router);
 
+const Recommend = () => import ("./views/recommend/recommend.vue");
+const Disc = () => import ("./views/disc/disc.vue");
+const Singer = () => () => import ("./views/singer/singer.vue");
+const PlaylistDetail = () => () => import ("./views/playlistDetail/playlistDetail.vue");
+const Mine = () => () => import ("./views/mine/mine.vue");
+
 export default new Router({
   // mode: "history",
   base: process.env.BASE_URL,
@@ -15,13 +21,11 @@ export default new Router({
     meta: {
       title: '推荐'
     },
-    component: () =>
-      import ("./views/recommend/recommend.vue"),
+    component: Recommend,
     children: [
       {
         path: ':id',
-        component: () =>
-          import ("./views/playlistDetail/playlistDetail.vue")
+        component: Disc
       }
     ]
   }, {
@@ -30,13 +34,11 @@ export default new Router({
     meta: {
       title: '歌手'
     },
-    component: () =>
-      import ("./views/singer/singer.vue"),
+    component: Singer,
     children: [
       {
         path: ':id',
-        component: () =>
-          import ("./views/playlistDetail/playlistDetail.vue")
+        component: PlaylistDetail
       }
     ]
   }, {
@@ -45,19 +47,7 @@ export default new Router({
     meta: {
       title: '我的'
     },
-    component: () =>
-      import ("./views/mine/mine.vue")
-  }, {
-    path: "/about",
-    name: "about",
-    meta: {
-      title: '关于叶子'
-    },
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import ( /* webpackChunkName: "about" */ "./views/About.vue")
+    component: Mine
   }, {
     path: "/playlistDetail/:id",
     name: "playlistDetail",

@@ -15,6 +15,7 @@
                 </li>
             </ul>
         </cube-scroll>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -63,13 +64,9 @@
       },
       jump(router, item) {
         if(router) {
-          let params = {
-            id: item.id
-          }
           this.$router.push({
-            name: router,
-            params
-          });
+            path: `/recommend/${item.id}`
+          })
         }
       }
     },
