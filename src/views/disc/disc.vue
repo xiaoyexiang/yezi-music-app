@@ -1,56 +1,62 @@
 <template>
     <transition appear name="slide">
-        <div class="list-container">
+        <div class="page-container">
             <div class="back" @click.prevent.stop="goBack()">
                 <i class="icon iconfont icon-xiangzuojiantou"></i>
             </div>
             <h2 class="title">推荐</h2>
-            <section class="pylist-header">
-                <div class="bg-image" :style="bgStyle"></div>
-                <div class="plhead_wrap">
-                    <div class="plhead_fl">
-                        <img class="u-img" v-lazy="bgImageUrl">
-                        <span class="lsthd_icon">歌单</span>
-                        <span class="lsthd_num">
-                            <i class="icon iconfont icon-erjieps"></i> {{handleCount(playlist && playlist.playCount)}}
-                        </span>
-                    </div>
-                    <div class="plhead_fr">
-                        <h2 class="lsthd_title">{{playlist.name}}</h2>
-                        <div class="lsthd_auth">
-                            <div class="u-avatar lsthd_ava">
-                                <img class="u-img" :src="playlist && playlist.creator.avatarUrl">
-                            </div>
-                            <span class="nickname">{{playlist && playlist.creator.nickname}}</span>
+            <div id="pylist-header-wrap" ref="pylistHeaderWrap">
+                <section class="pylist-header">
+                    <div class="bg-image" :style="bgStyle"></div>
+                    <div class="plhead_wrap">
+                        <div class="plhead_fl">
+                            <img class="u-img" v-lazy="bgImageUrl">
+                            <span class="lsthd_icon">歌单</span>
+                            <span class="lsthd_num">
+                                <i class="icon iconfont icon-erjieps"></i> {{handleCount(playlist && playlist.playCount)}}
+                            </span>
+                        </div>
+                        <div class="plhead_fr">
+                            <h2 class="lsthd_title">{{playlist.name}}</h2>
+                            <div class="lsthd_auth">
+                                <div class="u-avatar lsthd_ava">
+                                    <img class="u-img" :src="playlist && playlist.creator.avatarUrl">
+                                </div>
+                                <span class="nickname">{{playlist && playlist.creator.nickname}}</span>
 
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <section class="pylst_intro">
-                <div class="lstit_tags" v-if="playlist.tags && playlist.tags.length" v-cloak>
-                    标签：
-                    <em class="border-1px lstit_tag" :key="index" v-for="(tag, index) in playlist.tags">{{tag}}</em>
-                </div>
-                <div class="u-intro">
-                    <span v-html="'简介：' + playlist.description "></span>
-                </div>
-            </section>
-            <cube-scroll
-                    ref="scroll"
-                    :data="playlist.tracks">
-                <h3 class="u-smtitle">歌曲列表</h3>
-                <ul class="songlist">
-                    <template v-for="(song, index) in playlist.tracks">
-                        <li class="item border-bottom-1px" :data-song-id="song.id" @click.prevent.stop="goPlay(song.id)">
-                            <div class="content">
-                                <h3 v-html="song.name"></h3>
-                                <p class="desc">{{ getDesc(song) }}</p>
-                            </div>
-                        </li>
-                    </template>
-                </ul>
-            </cube-scroll>
+                </section>
+                <section class="pylst_intro">
+                    <div class="lstit_tags" v-if="playlist.tags && playlist.tags.length" v-cloak>
+                        标签：
+                        <em class="border-1px lstit_tag" :key="index" v-for="(tag, index) in playlist.tags">{{tag}}</em>
+                    </div>
+                    <div class="u-intro">
+                        <span v-html="'简介：' + playlist.description "></span>
+                    </div>
+                </section>
+            </div>
+
+            <div class="list-container" ref="list">
+                <cube-scroll
+                        ref="scroll"
+                        :data="playlist.tracks">
+                    <h3 class="u-smtitle">歌曲列表</h3>
+                    <ul class="songlist">
+                        <template v-for="(song, index) in playlist.tracks">
+                            <li class="item border-bottom-1px" :data-song-id="song.id" @click.prevent.stop="goPlay(song.id)">
+                                <div class="content">
+                                    <h3 v-html="song.name"></h3>
+                                    <p class="desc">{{ getDesc(song) }}</p>
+                                </div>
+                            </li>
+                        </template>
+                    </ul>
+                </cube-scroll>
+            </div>
+
         </div>
     </transition>
 </template>
@@ -84,6 +90,13 @@
           if (res && +res.code === 200) {
             this.playlist = res.playlist;
             this.bgImageUrl = this.playlist.coverImgUrl;
+
+            this.$nextTick(() => {
+              this.headerHeight = this.$refs.pylistHeaderWrap.offsetHeight;
+              console.log(this.headerHeight)
+              this.$refs.list.style.top = `${this.headerHeight}px`;
+              this.$refs.scroll.refresh();
+            })
           }
         }).then(() => {
           console.log(this.playlist);
@@ -112,12 +125,30 @@
       console.log(this.playlistId);
       this.getPlaylistDetail();
     },
+    mounted() {
+
+      this.$nextTick(() => {
+        this.headerHeight = this.$refs.pylistHeaderWrap.offsetHeight;
+        console.log(this.headerHeight)
+        this.$refs.list.style.top = `${this.headerHeight}px`;
+      })
+    }
   };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
     @import "../../common/stylus/base.styl"
-
+    .page-container {
+        position: fixed
+        top: 0
+        left: 0
+        right: 0
+        bottom: 0
+        z-index: 10
+        margin: auto
+        background-color: #fff
+        overflow: hidden
+    }
     .list-container {
         position: fixed
         top: 0

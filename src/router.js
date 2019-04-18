@@ -5,9 +5,9 @@ Vue.use(Router);
 
 const Recommend = () => import ("./views/recommend/recommend.vue");
 const Disc = () => import ("./views/disc/disc.vue");
-const Singer = () => () => import ("./views/singer/singer.vue");
-const PlaylistDetail = () => () => import ("./views/playlistDetail/playlistDetail.vue");
-const Mine = () => () => import ("./views/mine/mine.vue");
+const Singer = () => import ("./views/singer/singer.vue");
+const PlaylistDetail = () => import ("./views/playlistDetail/playlistDetail.vue");
+const Mine = () => import ("./views/mine/mine.vue");
 
 export default new Router({
   // mode: "history",
