@@ -10,7 +10,7 @@ const PlaylistDetail = () => import ("./views/playlistDetail/playlistDetail.vue"
 const Mine = () => import ("./views/mine/mine.vue");
 
 export default new Router({
-  // mode: "history",
+  mode: "history",
   base: process.env.BASE_URL,
   routes: [{
     path: '/',

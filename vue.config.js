@@ -1,7 +1,7 @@
 module.exports = {
   lintOnSave: false,
   filenameHashing: false,
-  publicPath: './',
+  publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
 
   css: {
     loaderOptions: {

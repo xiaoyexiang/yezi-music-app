@@ -1,5 +1,9 @@
 const state = {
-    currentSongUrl: ''
+  currentSongUrl: '',
+  playing: false,
+  fullScreen: false,
+  playlist: [],
+  sequenceList: [],
 }
 
 export default state
