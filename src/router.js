@@ -14,7 +14,6 @@ const Register = () => import("./views/register/register.vue");
 
 export default new Router({
   mode: "history",
-  base: '/music/',
   routes: [
     {
       path: "/",
