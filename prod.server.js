@@ -1,18 +1,14 @@
-var express = require('express')
-var compression = require('compression')
+const fs = require('fs');
+const path = require('path');
+const express = require('express');
+const chalk = require('chalk')
+const app = express();
+app.use(express.static(path.resolve(__dirname, './dist')))
 
-var port = 8010;
-
-var app = express()
-
-app.use(compression())
-
-app.use(express.static('./dist'))
-
-module.exports = app.listen(port, function (err) {
-  if (err) {
-    console.log(err)
-    return
-  }
-  console.log('Listening at http://localhost:' + port + '\n')
+app.get('*', function(req, res) {
+    const html = fs.readFileSync(path.resolve(__dirname, './dist/index.html'), 'utf-8')
+    res.send(html)
 })
+app.listen(8010, res => {
+  console.log(chalk.yellow('Start Service On 8082'));
+});
